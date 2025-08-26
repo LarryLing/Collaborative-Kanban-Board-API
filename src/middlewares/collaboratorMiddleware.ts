@@ -34,7 +34,7 @@ export async function verifyRole(
     if (!rows || (rows as Collaborator[]).length === 0) {
       console.error("Failed to verify role: User is not a board collaborator");
 
-      res.status(404).json({
+      res.status(403).json({
         error: "User is not a board collaborator",
         message: "Failed to verify role",
       });
