@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "tsx --watch src/index.ts",
+    "dev": "tsx --watch --env-file=.env src/index.ts",
     "start": "node dist/src/index.js",
     "build": "tsc",
     "type-check": "tsc --noEmit",
@@ -23,6 +23,8 @@
   "devDependencies": {
     "@eslint/js": "^9.34.0",
     "@tsconfig/node22": "^22.0.2",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.3.0",
     "eslint": "^9.34.0",
@@ -34,7 +36,12 @@
     "typescript-eslint": "^8.41.0"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.873.0",
+    "aws-jwt-verify": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.1",
-    "jwt-decode": "^4.0.0"
+    "jwt-decode": "^4.0.0",
+    "mysql2": "^3.14.3"
   }
 }
