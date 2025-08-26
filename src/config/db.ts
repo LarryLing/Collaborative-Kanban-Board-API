@@ -1,16 +1,16 @@
 import mysql from "mysql2/promise";
 
-import { RDS_HOSTNAME, RDS_USERNAME, RDS_PASSWORD, RDS_DB_NAME, RDS_PORT } from "../constants.js";
+import { RDS_DB_NAME, RDS_HOSTNAME, RDS_PASSWORD, RDS_PORT, RDS_USERNAME } from "../constants.js";
 
 const db = mysql.createPool({
-  waitForConnections: true,
-  password: RDS_PASSWORD,
-  database: RDS_DB_NAME,
   connectionLimit: 10,
+  database: RDS_DB_NAME,
   host: RDS_HOSTNAME,
-  user: RDS_USERNAME,
+  password: RDS_PASSWORD,
   port: RDS_PORT,
   queueLimit: 0,
+  user: RDS_USERNAME,
+  waitForConnections: true,
 });
 
 db.getConnection()

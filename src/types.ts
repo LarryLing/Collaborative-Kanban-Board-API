@@ -1,7 +1,9 @@
-import { Response, Request } from "express";
+import { Request, Response } from "express";
 import { JwtPayload } from "jwt-decode";
 
 import { COLLABORATOR, OWNER } from "./constants.js";
+
+export type AddCollaboratorBody = Pick<User, "email">;
 
 export interface AuthRequest<P = never, ResBody = never, ReqBody = never> extends Request<P, ResBody, ReqBody> {
   auth?: {
@@ -10,76 +12,74 @@ export interface AuthRequest<P = never, ResBody = never, ReqBody = never> extend
   };
 }
 
-export interface CollaboratorRequest<P = never, ResBody = never, ReqBody = never>
-  extends AuthRequest<P, ResBody, ReqBody> {
-  role?: Collaborator["role"];
-}
-
-export interface Card {
-  description: string;
-  board_id: string;
-  position: string;
-  list_id: string;
-  title: string;
+export interface Board {
+  created_at: string;
   id: string;
+  owner_id: string;
+  title: string;
 }
 
 export type { Response };
 
-export interface IDTokenPayload extends JwtPayload {
-  family_name: string;
-  given_name: string;
-  email: string;
-}
-
-export type PasswordResetBody = {
-  confirmationCode: string;
-  password: string;
-} & Pick<User, "email">;
-export type Collaborator = {
-  role: typeof COLLABORATOR | typeof OWNER;
-  joined_at: string;
-} & User;
-export type SignUpBody = Pick<User, "family_name" | "given_name" | "email"> & {
-  password: string;
-};
-export interface User {
-  family_name: string;
-  given_name: string;
-  email: string;
-  id: string;
-}
-export interface Board {
-  created_at: string;
-  owner_id: string;
-  title: string;
-  id: string;
-}
-
-export interface List {
+export interface Card {
   board_id: string;
+  description: string;
+  id: string;
+  list_id: string;
   position: string;
   title: string;
-  id: string;
 }
 
-export type UpdateCardPositionBody = { newListId: List["id"] } & Pick<Card, "position">;
-export type ConfirmSignUpBody = {
+export type Collaborator = User & {
+  joined_at: string;
+  role: typeof COLLABORATOR | typeof OWNER;
+};
+export interface CollaboratorRequest<P = never, ResBody = never, ReqBody = never>
+  extends AuthRequest<P, ResBody, ReqBody> {
+  role?: Collaborator["role"];
+}
+export type ConfirmSignUpBody = Pick<User, "email"> & {
   confirmationCode: string;
-} & Pick<User, "email">;
+};
+export type CreateBoardBody = Pick<Board, "created_at" | "id" | "title">;
+export type CreateCardBody = Pick<Card, "description" | "id" | "position" | "title">;
 
-export type CreateCardBody = Pick<Card, "description" | "position" | "title" | "id">;
+export type CreateListBody = Pick<List, "id" | "position" | "title">;
 
-export type CreateBoardBody = Pick<Board, "created_at" | "title" | "id">;
+export interface IDTokenPayload extends JwtPayload {
+  email: string;
+  family_name: string;
+  given_name: string;
+}
+export interface List {
+  board_id: string;
+  id: string;
+  position: string;
+  title: string;
+}
 
-export type CreateListBody = Pick<List, "position" | "title" | "id">;
+export type LoginBody = Pick<User, "email"> & { password: string };
 
-export type LoginBody = { password: string } & Pick<User, "email">;
-export type UpdateCardBody = Pick<Card, "description" | "title">;
-export type UpdateListPositionBody = Pick<List, "position">;
+export type PasswordResetBody = Pick<User, "email"> & {
+  confirmationCode: string;
+  password: string;
+};
 
 export type RequestConfirmationCode = Pick<User, "email">;
 
-export type AddCollaboratorBody = Pick<User, "email">;
+export type SignUpBody = Pick<User, "email" | "family_name" | "given_name"> & {
+  password: string;
+};
 export type UpdateBoardBody = Pick<Board, "title">;
+export type UpdateCardBody = Pick<Card, "description" | "title">;
+
+export type UpdateCardPositionBody = Pick<Card, "position"> & { newListId: List["id"] };
+
 export type UpdateListBody = Pick<List, "title">;
+export type UpdateListPositionBody = Pick<List, "position">;
+export interface User {
+  email: string;
+  family_name: string;
+  given_name: string;
+  id: string;
+}

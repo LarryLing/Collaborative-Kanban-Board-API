@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 
-import { AuthRequest, Response } from "../types.js";
 import jwtVerifier from "../config/jwtVerifier.js";
+import { AuthRequest, Response } from "../types.js";
 
 export async function verifyAuth(req: AuthRequest, res: Response, next: NextFunction) {
   try {
@@ -45,8 +45,8 @@ export async function verifyAuth(req: AuthRequest, res: Response, next: NextFunc
     console.error("Failed to verify auth:", errorMessage);
 
     res.status(401).json({
-      message: "Failed to verify auth",
       error: errorMessage,
+      message: "Failed to verify auth",
     });
   }
 }

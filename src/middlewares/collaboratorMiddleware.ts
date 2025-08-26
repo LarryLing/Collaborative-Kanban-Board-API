@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 
-import { CollaboratorRequest, Collaborator, Response, Board } from "../types.js";
 import db from "../config/db.js";
+import { Board, Collaborator, CollaboratorRequest, Response } from "../types.js";
 
 export async function verifyRole(
   req: CollaboratorRequest<{ boardId: Board["id"] }>,
@@ -51,8 +51,8 @@ export async function verifyRole(
     console.error("Failed to verify role:", errorMessage);
 
     res.status(500).json({
-      message: "Failed to verify role",
       error: errorMessage,
+      message: "Failed to verify role",
     });
   }
 }
