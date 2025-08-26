@@ -77,7 +77,7 @@ export async function deleteUser(req: AuthRequest, res: Response) {
 
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
       secure: true,
     });
 
@@ -140,7 +140,7 @@ export async function getMe(req: AuthRequest, res: Response) {
     res.cookie("refreshToken", RefreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      sameSite: "lax",
+      sameSite: "none", // Required for cross-origin cookies
       secure: true,
     });
 
@@ -213,7 +213,7 @@ export async function login(req: Request<object, object, LoginBody>, res: Respon
     res.cookie("refreshToken", RefreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      sameSite: "lax",
+      sameSite: "none",
       secure: true,
     });
 
@@ -260,7 +260,7 @@ export async function logout(req: AuthRequest, res: Response) {
 
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
       secure: true,
     });
 
