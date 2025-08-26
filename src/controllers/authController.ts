@@ -75,7 +75,11 @@ export async function deleteUser(req: AuthRequest, res: Response) {
 
     await cognito.send(adminDeleteUserCommand);
 
-    res.clearCookie("refreshToken");
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: true,
+    });
 
     res.status(200).json({ message: "Successfully deleted user" });
   } catch (error) {
@@ -136,7 +140,7 @@ export async function getMe(req: AuthRequest, res: Response) {
     res.cookie("refreshToken", RefreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      sameSite: "strict",
+      sameSite: "lax",
       secure: true,
     });
 
@@ -209,7 +213,7 @@ export async function login(req: Request<object, object, LoginBody>, res: Respon
     res.cookie("refreshToken", RefreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      sameSite: "strict",
+      sameSite: "lax",
       secure: true,
     });
 
@@ -254,7 +258,11 @@ export async function logout(req: AuthRequest, res: Response) {
 
     await cognito.send(adminUserGlobalSignOutCommand);
 
-    res.clearCookie("refreshToken");
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: true,
+    });
 
     res.status(200).json({ message: "Successfully logged out user" });
   } catch (error) {
